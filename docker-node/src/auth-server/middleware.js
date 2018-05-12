@@ -15,10 +15,9 @@ var verifyJWT = function(req, res, next){
   });
 }
 
-var login = function(userID, age = 3600){
+var login = function(userID){
   return createJWToken({
-    sessionData: userID,
-    maxAge: age
+    sessionData: userID
   })
 }
 

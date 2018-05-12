@@ -31,6 +31,10 @@ services:
         condition: on-failure
     environment:
       DB_HOST: mongo
+      DB_USER: root
+      DB_PASS: example
+      JWT_SECRET: secretphrase
+      JWT_MAX_AGE: 3600
     ports:
       - "3000:3000"
     networks:

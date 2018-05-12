@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DB_HOST=localhost pm2 start src/index.js -f --watch --name docker-node",
+    "start": "pm2 start ecosystem.config.js -f",
     "stop": "pm2 stop docker-node && pm2 delete docker-node",
     "build": "docker build -q -t aido179/docker-node-boilerplate:test .",
     "build-prod": "npm run-script build",
