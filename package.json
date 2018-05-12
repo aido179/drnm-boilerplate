@@ -1,0 +1,20 @@
+{
+  "name": "docker",
+  "version": "1.0.0",
+  "description": "A test package to setup a docker environment with separate frontend and backend apps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "(cd docker-react && npm run-script build-prod) && (cd docker-node && npm run-script build-prod) && (cd docker-mongo && npm run-script build-prod)",
+    "publish":"(cd docker-node && docker push aido179/docker-node-boilerplate:test) && (cd docker-react && docker push aido179/docker-react-boilerplate:test) && (cd docker-mongo && docker push aido179/docker-mongo-boilerplate:test)",
+    "start":"docker swarm init && docker stack deploy -c docker-compose.yml docker-boilerplate",
+    "start-prod":"npm run-script build && npm run-script publish && npm start",
+    "stop-prod":"docker stack rm docker-boilerplate && docker swarm leave --force",
+
+    "start-dev": "(cd docker-node && npm start) && (cd docker-mongo && npm start) && (cd docker-react && npm start)",
+    "stop-dev":"docker stop $(docker ps -a -q) && pm2 stop all && pm2 delete all"
+
+  },
+  "author": "Aidan Breen",
+  "license": "ISC"
+}

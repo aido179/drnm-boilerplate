@@ -1,0 +1,69 @@
+#Run the react, node and mongo "services" (containers)
+version: "3"
+services:
+  react:
+    # replace username/repo:tag with your name and image details
+    image: aido179/docker-react-boilerplate:test
+    deploy:
+      replicas: 4
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    environment:
+      API_HOST: node
+    ports:
+      - "5000:5000"
+    networks:
+      - webnet
+  node:
+    # replace username/repo:tag with your name and image details
+    image: aido179/docker-node-boilerplate:test
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    environment:
+      DB_HOST: mongo
+    ports:
+      - "3000:3000"
+    networks:
+      - webnet
+  mongo:
+    # replace username/repo:tag with your name and image details
+    image: aido179/docker-mongo-boilerplate:test
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "27017:27017"
+    networks:
+      - webnet
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    ports:
+      - "8081:8081"
+    networks:
+      - webnet
+
+networks:
+  webnet:

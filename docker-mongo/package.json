@@ -1,0 +1,15 @@
+{
+  "name": "docker-mongo",
+  "version": "1.0.0",
+  "description": "A test package to setup a docker mongo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "docker build -q -t aido179/docker-mongo-boilerplate:test .",
+    "build-prod":"npm run-script build",
+    "start": "npm run-script build && ./start.sh"
+
+  },
+  "author": "Aidan Breen",
+  "license": "ISC"
+}

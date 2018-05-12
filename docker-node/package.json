@@ -1,0 +1,34 @@
+{
+  "name": "docker-node",
+  "version": "1.0.0",
+  "description": "A boilerplate node docker image",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DB_HOST=localhost pm2 start src/index.js -f --watch --name docker-node",
+    "stop": "pm2 stop docker-node && pm2 delete docker-node",
+    "build": "docker build -q -t aido179/docker-node-boilerplate:test .",
+    "build-prod": "npm run-script build",
+    "publish": "docker push aido179/docker-node-boilerplate:test"
+  },
+  "author": "Aidan Breen",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "connect-mongo": "^2.0.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.0.17",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": ".git"
+  }
+}

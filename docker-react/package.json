@@ -1,0 +1,23 @@
+{
+  "name": "docker-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "PORT=5000 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build-prod": "docker build -q -t aido179/docker-react-boilerplate:test .",
+    "start-prod": "npm run-script build-prod && docker run -d --rm -p 5000:5000 aido179/docker-react-boilerplate:test",
+    "stop-prod": "docker stop $(docker ps -a -q) && docker stack rm drb && docker swarm leave --force",
+    "publish": "docker push aido179/docker-react-boilerplate:test",
+    "deploy": "docker swarm leave --force && docker swarm init && docker stack deploy -c docker-compose.yml drb"
+
+  }
+}
