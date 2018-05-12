@@ -2,6 +2,8 @@
 
 This is a boilerplate project for a docker based node application. Each service should be very loosely coupled, with the frontend consuming a REST API supplied by the node backend, connected to a mongodb backend.
 
+![picture](img/drnm.png)
+
 Services are contained in individual folders:
 
 docker-mongo (port:27017) The mongodb database  
