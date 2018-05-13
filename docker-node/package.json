@@ -4,7 +4,7 @@
   "description": "A boilerplate node docker image",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./src/**/*.test.js",
     "start": "pm2 start ecosystem.config.js -f",
     "stop": "pm2 stop docker-node && pm2 delete docker-node",
     "build": "docker build -q -t aido179/docker-node-boilerplate:test .",
@@ -26,7 +26,9 @@
     "passport-local": "^1.0.0",
     "vue": "^2.5.16"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^5.1.1"
+  },
   "repository": {
     "type": "git",
     "url": ".git"

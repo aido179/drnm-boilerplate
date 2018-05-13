@@ -42,12 +42,16 @@ const create = function(userObj){
     var user = new User(userObj);
     user.save(function (err, savedUser) {
        if (err){
-         reject({"Error creating user":err});
+         reject({
+           "status": "Error",
+           "message":"Error creating user",
+           "error":err
+         });
        }else{
          let token = auth.login(savedUser._id);
          resolve({
            "status":"Success",
-           "message":"User created successfully.",
+           "message":"User created successfully",
            "token":token
          });
        }
