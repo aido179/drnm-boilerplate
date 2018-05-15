@@ -10,7 +10,7 @@ Import env variables from pm2 ecosystem.config file
 var env = require('../../ecosystem.config.js').apps[0].env;
 
 describe('User controller', function() {
-  before(function() {
+  before(function(done) {
     // runs before all tests in this block
     //connect to db
     const DB_HOST = env.DB_HOST;
@@ -22,10 +22,12 @@ describe('User controller', function() {
       throw new Error("Error connecting to database.");
     });
     //clear database
-    UserModel.remove({});
+    UserModel.remove({}).then(function(){
+      done();
+    });
   });
   after(function(){
-    process.exit(0);
+    //process.exit(0);
   });
 
   describe('#create()', function() {
@@ -135,17 +137,18 @@ describe('User controller', function() {
   describe('#login()', function() {
     before(function(done){
       //start with a clean slate and one test user.
-      UserModel.remove({});
-      User.create({
-        username:"test_username",
-        password:"test_password",
-        email:"test_email@test.com"
-      })
-      .then(function(data){
-        done();
-      })
-      .catch(function(err){
-        done(new Error(err));
+      UserModel.remove({}).then(function(){
+        User.create({
+          username:"test_username",
+          password:"test_password",
+          email:"test_email@test.com"
+        })
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(new Error(err));
+        });
       });
     });
     it('should reject if username and passwords are not valid.', function(done) {
@@ -189,19 +192,21 @@ describe('User controller', function() {
     var userID;
     before(function(done){
       //start with a clean slate and one test user.
-      UserModel.remove({});
-      User.create({
-        username:"test_username",
-        password:"test_password",
-        email:"test_email@test.com"
-      })
-      .then(function(data){
-        userID = data.userID;
-        done();
-      })
-      .catch(function(err){
-        done(new Error(err));
+      UserModel.remove({}).then(function(){
+        User.create({
+          username:"test_username",
+          password:"test_password",
+          email:"test_email@test.com"
+        })
+        .then(function(data){
+          userID = data.userID;
+          done();
+        })
+        .catch(function(err){
+          done(new Error(err));
+        });
       });
+
     });
     it('should reject if user is not found.', function(done) {
       User.get("not_a_real_id")
