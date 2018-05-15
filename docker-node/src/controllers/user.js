@@ -16,7 +16,10 @@ const login = function(username, password){
       }
       user.comparePassword(password, function(err, match){
         if(err || !match){
-          reject({"Error":"Password mismatch."});
+          reject({
+            "status":"Error",
+            "message":"Password mismatch."
+          });
           return;
         }
         let token = auth.login(user._id);
@@ -32,7 +35,10 @@ const login = function(username, password){
 //TODO: implement server side logout (JWT invalidation)
 const logout = function(username){
   return new Promise((resolve, reject)=>{
-    reject({"Error":"Logout not inplemented."});
+    reject({
+      "status":"Error",
+      "message":"Logout not implemented"
+    });
   });
 }
 
@@ -52,6 +58,7 @@ const create = function(userObj){
          resolve({
            "status":"Success",
            "message":"User created successfully",
+           "userID":savedUser._id,
            "token":token
          });
        }
@@ -63,7 +70,10 @@ const get = function(id){
   return new Promise((resolve, reject)=>{
     User.findOne({_id:id},function(err,data){
       if(err){
-        reject({"Error getting user":err});
+        reject({
+          "status":"Error",
+          "message":"User not found"
+        });
       }
       resolve(data);
     });
